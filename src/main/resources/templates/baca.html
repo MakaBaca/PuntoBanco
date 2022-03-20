@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Baca Game</title>
+<style type="text/css">
+.circle-text {
+	display: table-cell;
+	height: 20px;
+	/*change this and the width for the size of your initial circle*/
+	width: 20px;
+	text-align: center;
+	vertical-align: middle;
+	border-radius: 50%;
+	/*make it pretty*/
+	background: #fff;
+	border-style: solid;
+	color: #000;
+	font: 18px "josefin sans", arial;
+	/*change this for font-size and font-family*/
+}
+
+.win {
+	background: #ADFF2F;
+}
+
+.lose {
+	background: #FF0000;
+}
+
+.floatedTable {
+	float: left;
+}
+</style>
+</head>
+<body>
+	<table border="2" class="floatedTable">
+		<tr>
+			<th>#</th>
+			<th>Player</th>
+			<th>Banker</th>
+			<th>Score</th>
+			<th>P/B</th>
+			<th>OR</th>
+			<th>OT</th>
+			<th>OOTT</th>
+			<th>4D W</th>
+			<th>4D I</th>
+			<th>1's</th>
+			<th>2's</th>
+			<th>3's+</th>
+		</tr>
+		<div th:each="btc, iStat : ${btcList}" th:if="${iStat.index < 22}">
+			<tr>
+				<td th:text="${btc.noOfHands}"></td>
+				<div
+					th:if="${#strings.length(btc.player) > 1 and #strings.startsWith(btc.player, 'O')}">
+					<td class="win">
+						<div class="circle-text"
+							th:text="${#strings.substringAfter(btc.player,'  ')}"></div>
+					</td>
+				</div>
+				<div
+					th:if="${#strings.length(btc.player) > 0 and btc.player != 'O' and not #strings.startsWith(btc.player, 'O')}">
+					<td class="lose" th:text="${btc.player}"></td>
+				</div>
+				<div th:if="${btc.player == 'O'}">
+					<td>
+						<div class="circle-text"></div>
+					</td>
+				</div>
+				<div th:if="${btc.player == ''}">
+					<td th:text="${btc.player}"></td>
+				</div>
+				<div
+					th:if="${#strings.length(btc.banker) > 1 and #strings.startsWith(btc.banker, 'O')}">
+					<td class="win">
+						<div class="circle-text"
+							th:text="${#strings.substringAfter(btc.banker,'  ')}"></div>
+					</td>
+				</div>
+				<div
+					th:if="${#strings.length(btc.banker) > 0 and btc.banker != 'O' and not #strings.startsWith(btc.banker, 'O')}">
+					<td class="lose" th:text="${btc.banker}"></td>
+				</div>
+				<div th:if="${btc.banker == 'O'}">
+					<td>
+						<div class="circle-text"></div>
+					</td>
+				</div>
+				<div th:if="${btc.banker == ''}">
+					<td th:text="${btc.banker}"></td>
+				</div>
+				<td th:text="${btc.strScore}"></td>
+				<td th:text="${btc.pb}"></td>
+				<td th:text="${btc.orCount}"></td>
+				<td th:text="${btc.otCount}"></td>
+				<td th:text="${btc.oottCount}"></td>
+				<div th:if="${#strings.isEmpty(btc.did4DWin)}">
+					<td></td>
+				</div>
+				<div th:if="${btc.did4DWin == 'N'}">
+					<td class="lose" th:text="${btc.did4DWin}"></td>
+				</div>
+				<div th:if="${btc.did4DWin == 'Y'}">
+					<td class="win" th:text="${btc.did4DWin}"></td>
+				</div>
+				<td th:text="${btc.fourDIndicates}"></td>
+				<td th:text="${btc.oneInARow}"></td>
+				<td th:text="${btc.twoInARow}"></td>
+				<td th:text="${btc.threeOrMoreInARow}"></td>
+			</tr>
+		</div>
+	</table>
+	<table border="2" class="floatedTable">
+		<tr>
+			<th>#</th>
+			<th>Player</th>
+			<th>Banker</th>
+			<th>Score</th>
+			<th>P/B</th>
+			<th>OR</th>
+			<th>OT</th>
+			<th>OOTT</th>
+			<th>4D W</th>
+			<th>4D I</th>
+			<th>1's</th>
+			<th>2's</th>
+			<th>3's+</th>
+		</tr>
+		<div th:each="btc, iStat : ${btcList}" th:if="${iStat.index > 21 and iStat.index < 44}">
+			<tr>
+				<td th:text="${btc.noOfHands}"></td>
+				<div
+					th:if="${#strings.length(btc.player) > 1 and #strings.startsWith(btc.player, 'O')}">
+					<td class="win">
+						<div class="circle-text"
+							th:text="${#strings.substringAfter(btc.player,'  ')}"></div>
+					</td>
+				</div>
+				<div
+					th:if="${#strings.length(btc.player) > 0 and btc.player != 'O' and not #strings.startsWith(btc.player, 'O')}">
+					<td class="lose" th:text="${btc.player}"></td>
+				</div>
+				<div th:if="${btc.player == 'O'}">
+					<td>
+						<div class="circle-text"></div>
+					</td>
+				</div>
+				<div th:if="${btc.player == ''}">
+					<td th:text="${btc.player}"></td>
+				</div>
+				<div
+					th:if="${#strings.length(btc.banker) > 1 and #strings.startsWith(btc.banker, 'O')}">
+					<td class="win">
+						<div class="circle-text"
+							th:text="${#strings.substringAfter(btc.banker,'  ')}"></div>
+					</td>
+				</div>
+				<div
+					th:if="${#strings.length(btc.banker) > 0 and btc.banker != 'O' and not #strings.startsWith(btc.banker, 'O')}">
+					<td class="lose" th:text="${btc.banker}"></td>
+				</div>
+				<div th:if="${btc.banker == 'O'}">
+					<td>
+						<div class="circle-text"></div>
+					</td>
+				</div>
+				<div th:if="${btc.banker == ''}">
+					<td th:text="${btc.banker}"></td>
+				</div>
+				<td th:text="${btc.strScore}"></td>
+				<td th:text="${btc.pb}"></td>
+				<td th:text="${btc.orCount}"></td>
+				<td th:text="${btc.otCount}"></td>
+				<td th:text="${btc.oottCount}"></td>
+				<div th:if="${#strings.isEmpty(btc.did4DWin)}">
+					<td></td>
+				</div>
+				<div th:if="${btc.did4DWin == 'N'}">
+					<td class="lose" th:text="${btc.did4DWin}"></td>
+				</div>
+				<div th:if="${btc.did4DWin == 'Y'}">
+					<td class="win" th:text="${btc.did4DWin}"></td>
+				</div>
+				<td th:text="${btc.fourDIndicates}"></td>
+				<td th:text="${btc.oneInARow}"></td>
+				<td th:text="${btc.twoInARow}"></td>
+				<td th:text="${btc.threeOrMoreInARow}"></td>
+			</tr>
+		</div>
+	</table>
+	<table border="2" class="floatedTable">
+		<tr>
+			<th>#</th>
+			<th>Player</th>
+			<th>Banker</th>
+			<th>Score</th>
+			<th>P/B</th>
+			<th>OR</th>
+			<th>OT</th>
+			<th>OOTT</th>
+			<th>4D W</th>
+			<th>4D I</th>
+			<th>1's</th>
+			<th>2's</th>
+			<th>3's+</th>
+		</tr>
+		<div th:each="btc, iStat : ${btcList}" th:if="${iStat.index > 43}">
+			<tr>
+				<td th:text="${btc.noOfHands}"></td>
+				<div
+					th:if="${#strings.length(btc.player) > 1 and #strings.startsWith(btc.player, 'O')}">
+					<td class="win">
+						<div class="circle-text"
+							th:text="${#strings.substringAfter(btc.player,'  ')}"></div>
+					</td>
+				</div>
+				<div
+					th:if="${#strings.length(btc.player) > 0 and btc.player != 'O' and not #strings.startsWith(btc.player, 'O')}">
+					<td class="lose" th:text="${btc.player}"></td>
+				</div>
+				<div th:if="${btc.player == 'O'}">
+					<td>
+						<div class="circle-text"></div>
+					</td>
+				</div>
+				<div th:if="${btc.player == ''}">
+					<td th:text="${btc.player}"></td>
+				</div>
+				<div
+					th:if="${#strings.length(btc.banker) > 1 and #strings.startsWith(btc.banker, 'O')}">
+					<td class="win">
+						<div class="circle-text"
+							th:text="${#strings.substringAfter(btc.banker,'  ')}"></div>
+					</td>
+				</div>
+				<div
+					th:if="${#strings.length(btc.banker) > 0 and btc.banker != 'O' and not #strings.startsWith(btc.banker, 'O')}">
+					<td class="lose" th:text="${btc.banker}"></td>
+				</div>
+				<div th:if="${btc.banker == 'O'}">
+					<td>
+						<div class="circle-text"></div>
+					</td>
+				</div>
+				<div th:if="${btc.banker == ''}">
+					<td th:text="${btc.banker}"></td>
+				</div>
+				<td th:text="${btc.strScore}"></td>
+				<td th:text="${btc.pb}"></td>
+				<td th:text="${btc.orCount}"></td>
+				<td th:text="${btc.otCount}"></td>
+				<td th:text="${btc.oottCount}"></td>
+				<div th:if="${#strings.isEmpty(btc.did4DWin)}">
+					<td></td>
+				</div>
+				<div th:if="${btc.did4DWin == 'N'}">
+					<td class="lose" th:text="${btc.did4DWin}"></td>
+				</div>
+				<div th:if="${btc.did4DWin == 'Y'}">
+					<td class="win" th:text="${btc.did4DWin}"></td>
+				</div>
+				<td th:text="${btc.fourDIndicates}"></td>
+				<td th:text="${btc.oneInARow}"></td>
+				<td th:text="${btc.twoInARow}"></td>
+				<td th:text="${btc.threeOrMoreInARow}"></td>
+			</tr>
+		</div>
+	</table>
+	<form action="#" th:action="@{/game/processForm}" method="post">
+		<input type="radio" th:name="wageredOn" value="player">P <input
+			type="radio" th:name="wageredOn" value="banker">B <input
+			type="radio" th:name="wageredOn" value="nb" checked>NB <br>
+		<!-- <input type="radio" name="unit" value="0">0
+		<input type="radio" name="unit" value="1" checked>1
+		<input type="radio" name="unit" value="2">2
+		<input type="radio" name="unit" value="3">3
+		<input type="radio" name="unit" value="4">4
+		<input type="radio" name="unit" value="5">5
+		<input type="radio" name="unit" value="6">6
+		<input type="radio" name="unit" value="7">7
+		<input type="radio" name="unit" value="8">8
+		<input type="radio" name="unit" value="9">9
+		<input type="radio" name="unit" value="10">10
+		<input type="radio" name="unit" value="11">11
+		<input type="radio" name="unit" value="12">12
+		<input type="radio" name="unit" value="13">13
+		<input type="radio" name="unit" value="14">14
+		<input type="radio" name="unit" value="15">15 -->
+		<input type="number" th:name="unit" value="0" min="0" max="300">
+		<input type="submit" name="Deal" value="Deal"> New Shoe
+		-------------------------------> <input type="submit" name="New"
+			value="New Shoe">
+	</form>
+</body>
+</html>

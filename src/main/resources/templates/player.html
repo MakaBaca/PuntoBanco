@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<!-- <meta charset="ISO-8859-1"> -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Players</title>
+</head>
+<body>
+	<form action="#" th:action="@{/createPlayer}" method="post">
+		<label>Name:</label><input type="text" th:name="name" size="32" /> <input
+			type="submit" name="create" />
+	</form>
+	<br>
+	<div th:if="${players}">
+		<label> Players </label>
+		<table border="2" width="70%" cellpadding="2">
+			<tr>
+				<th>Name</th>
+				<th>Invested</th>
+				<th>Profit</th>
+				<th>Play</th>
+				<th>View</th>
+				<th>Record</th>
+				<th>Refresh</th>
+				<th>Performance</th>
+			</tr>
+
+			<tr th:each="player : ${players}">
+				<td th:text="${player.name}"></td>
+				<td th:text="${player.invested}"></td>
+				<td th:text="${player.winings}"></td>
+				<td>
+					<a href="baca.html" th:href="@{'/game/'+ ${player.playerId}}">play</a>
+					<a href="baca.html" th:href="@{'/mr/'+ ${player.playerId}}">Mr.Play</a>
+				</td>
+				<td><a href="/playedShoes/${player.playerId}">view</a></td>
+				<td><a href="/recordGame/${player.playerId}">record</a></td>
+				<td><a href="baca.html" th:href="@{'/refreshScore/'+ ${player.playerId}}">refreshScore</a></td>
+				<td><a href="/showResult/${player.playerId}">refreshScore</a></td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Baca Game</title>
+<style type="text/css">
+.circle-text {
+	display: table-cell;
+	height: 20px;
+	/*change this and the width for the size of your initial circle*/
+	width: 20px;
+	text-align: center;
+	vertical-align: middle;
+	border-radius: 50%;
+	/*make it pretty*/
+	background: #fff;
+	border-style: solid;
+	color: #000;
+	font: 18px "josefin sans", arial;
+	/*change this for font-size and font-family*/
+}
+
+.win {
+	background: #ADFF2F;
+}
+
+.lose {
+	background: #FF0000;
+}
+
+.floatedTable {
+	float: left;
+}
+
+.chart{
+	background: orange;
+}
+
+.beb{
+	display: table-cell;
+	height: 20px;
+	/*change this and the width for the size of your initial circle*/
+	width: 20px;
+	border-radius: 50%;
+	/*make it pretty*/
+	border-style: solid;
+	/*change this for font-size and font-family*/
+}
+
+.chaoticSr{
+	display: table-cell;
+	height: 20px;
+	/*change this and the width for the size of your initial circle*/
+	width: 20px;
+	border-radius: 50%;
+	/*make it pretty*/
+	border-style: solid;
+	color: blue;
+	background: blue;
+	/*change this for font-size and font-family*/
+}
+
+.predictableSr{
+	display: table-cell;
+	height: 20px;
+	/*change this and the width for the size of your initial circle*/
+	width: 20px;
+	border-radius: 50%;
+	/*make it pretty*/
+	border-style: solid;
+	color: red;
+	background: red;
+	/*change this for font-size and font-family*/
+}
+
+.chaos{
+	color: blue;
+	font-size: 30px;
+	font-weight: bolder;
+}
+
+.predictable{
+	color: red;
+	font-size: 30px;
+	font-weight: bolder;
+}
+
+.player{
+	color : blue;
+}
+
+.banker{
+	color : red;
+}
+
+</style>
+</head>
+<body>
+	<table border="2" class="floatedTable">
+		<tr>
+			<th>#</th>
+			<th>Player</th>
+			<th>Banker</th>
+			<th>Score</th>
+			<th>P/B</th>
+			<th>BEB</th>
+			<th>SR</th>
+			<th>CP</th>
+		</tr>
+		<div th:each="btc, iStat : ${btcList}" th:if="${iStat.index < 22}">
+			<tr>
+				<td th:text="${btc.noOfHands}"></td>
+				<div
+					th:if="${#strings.length(btc.player) > 1 and #strings.startsWith(btc.player, 'O')}">
+					<td class="win">
+						<div class="circle-text"
+							th:text="${#strings.substringAfter(btc.player,'  ')}"></div>
+					</td>
+				</div>
+				<div
+					th:if="${#strings.length(btc.player) > 0 and btc.player != 'O' and not #strings.startsWith(btc.player, 'O')}">
+					<td class="lose" th:text="${btc.player}"></td>
+				</div>
+				<div th:if="${btc.player == 'O'}">
+					<td>
+						<div class="circle-text"></div>
+					</td>
+				</div>
+				<div th:if="${btc.player == ''}">
+					<td th:text="${btc.player}"></td>
+				</div>
+				<div
+					th:if="${#strings.length(btc.banker) > 1 and #strings.startsWith(btc.banker, 'O')}">
+					<td class="win">
+						<div class="circle-text"
+							th:text="${#strings.substringAfter(btc.banker,'  ')}"></div>
+					</td>
+				</div>
+				<div
+					th:if="${#strings.length(btc.banker) > 0 and btc.banker != 'O' and not #strings.startsWith(btc.banker, 'O')}">
+					<td class="lose" th:text="${btc.banker}"></td>
+				</div>
+				<div th:if="${btc.banker == 'O'}">
+					<td>
+						<div class="circle-text"></div>
+					</td>
+				</div>
+				<div th:if="${btc.banker == ''}">
+					<td th:text="${btc.banker}"></td>
+				</div>
+				<td th:text="${btc.strScore}"></td>
+				<td th:text="${btc.pb}"></td>
+				<td align="center"> <div th:class="${btc.isBebOn ? btc.chaosOnBeb ? 'beb chaos': 'beb predictable' : ''}"/></td>
+				<td align="center"> <div th:class="${btc.isSrOn ? btc.chaosOnSr ? 'chaoticSr': 'predictableSr' : ''}"/></td>
+				<td align="center"> <div th:class="${btc.isCpOn ? btc.chaosOnCp ? 'chaos': 'predictable' : ''}" th:text="${btc.isCpOn ? '/':''}"/></td>
+			</tr>
+		</div>
+	</table>
+	<table border="2" class="floatedTable">
+		<tr>
+			<th>#</th>
+			<th>Player</th>
+			<th>Banker</th>
+			<th>Score</th>
+			<th>P/B</th>
+			<th>BEB</th>
+			<th>SR</th>
+			<th>CP</th>
+		</tr>
+		<div th:each="btc, iStat : ${btcList}" th:if="${iStat.index > 21 and iStat.index < 44}">
+			<tr>
+				<td th:text="${btc.noOfHands}"></td>
+				<div
+					th:if="${#strings.length(btc.player) > 1 and #strings.startsWith(btc.player, 'O')}">
+					<td class="win">
+						<div class="circle-text"
+							th:text="${#strings.substringAfter(btc.player,'  ')}"></div>
+					</td>
+				</div>
+				<div
+					th:if="${#strings.length(btc.player) > 0 and btc.player != 'O' and not #strings.startsWith(btc.player, 'O')}">
+					<td class="lose" th:text="${btc.player}"></td>
+				</div>
+				<div th:if="${btc.player == 'O'}">
+					<td>
+						<div class="circle-text"></div>
+					</td>
+				</div>
+				<div th:if="${btc.player == ''}">
+					<td th:text="${btc.player}"></td>
+				</div>
+				<div
+					th:if="${#strings.length(btc.banker) > 1 and #strings.startsWith(btc.banker, 'O')}">
+					<td class="win">
+						<div class="circle-text"
+							th:text="${#strings.substringAfter(btc.banker,'  ')}"></div>
+					</td>
+				</div>
+				<div
+					th:if="${#strings.length(btc.banker) > 0 and btc.banker != 'O' and not #strings.startsWith(btc.banker, 'O')}">
+					<td class="lose" th:text="${btc.banker}"></td>
+				</div>
+				<div th:if="${btc.banker == 'O'}">
+					<td>
+						<div class="circle-text"></div>
+					</td>
+				</div>
+				<div th:if="${btc.banker == ''}">
+					<td th:text="${btc.banker}"></td>
+				</div>
+				<td th:text="${btc.strScore}"></td>
+				<td th:text="${btc.pb}"></td>
+				<td align="center"> <div th:class="${btc.isBebOn ? btc.chaosOnBeb ? 'beb chaos': 'beb predictable' : ''}"/></td>
+				<td align="center"> <div th:class="${btc.isSrOn ? btc.chaosOnSr ? 'chaoticSr': 'predictableSr' : ''}"/></td>
+				<td align="center"> <div th:class="${btc.isCpOn ? btc.chaosOnCp ? 'chaos': 'predictable' : ''}" th:text="${btc.isCpOn ? '/':''}"/></td>
+			</tr>
+		</div>
+	</table>
+	<table border="2" class="floatedTable">
+		<tr>
+			<th>#</th>
+			<th>Player</th>
+			<th>Banker</th>
+			<th>Score</th>
+			<th>P/B</th>
+			<th>BEB</th>
+			<th>SR</th>
+			<th>CP</th>
+		</tr>
+		<div th:each="btc, iStat : ${btcList}" th:if="${iStat.index > 43}">
+			<tr>
+				<td th:text="${btc.noOfHands}"></td>
+				<div
+					th:if="${#strings.length(btc.player) > 1 and #strings.startsWith(btc.player, 'O')}">
+					<td class="win">
+						<div class="circle-text"
+							th:text="${#strings.substringAfter(btc.player,'  ')}"></div>
+					</td>
+				</div>
+				<div
+					th:if="${#strings.length(btc.player) > 0 and btc.player != 'O' and not #strings.startsWith(btc.player, 'O')}">
+					<td class="lose" th:text="${btc.player}"></td>
+				</div>
+				<div th:if="${btc.player == 'O'}">
+					<td>
+						<div class="circle-text"></div>
+					</td>
+				</div>
+				<div th:if="${btc.player == ''}">
+					<td th:text="${btc.player}"></td>
+				</div>
+				<div
+					th:if="${#strings.length(btc.banker) > 1 and #strings.startsWith(btc.banker, 'O')}">
+					<td class="win">
+						<div class="circle-text"
+							th:text="${#strings.substringAfter(btc.banker,'  ')}"></div>
+					</td>
+				</div>
+				<div
+					th:if="${#strings.length(btc.banker) > 0 and btc.banker != 'O' and not #strings.startsWith(btc.banker, 'O')}">
+					<td class="lose" th:text="${btc.banker}"></td>
+				</div>
+				<div th:if="${btc.banker == 'O'}">
+					<td>
+						<div class="circle-text"></div>
+					</td>
+				</div>
+				<div th:if="${btc.banker == ''}">
+					<td th:text="${btc.banker}"></td>
+				</div>
+				<td th:text="${btc.strScore}"></td>
+				<td th:text="${btc.pb}"></td>
+				<td align="center"> <div th:class="${btc.isBebOn ? btc.chaosOnBeb ? 'beb chaos': 'beb predictable' : ''}"/></td>
+				<td align="center"> <div th:class="${btc.isSrOn ? btc.chaosOnSr ? 'chaoticSr': 'predictableSr' : ''}"/></td>
+				<td align="center"> <div th:class="${btc.isCpOn ? btc.chaosOnCp ? 'chaos': 'predictable' : ''}" th:text="${btc.isCpOn ? '/':''}"/></td>
+			</tr>
+		</div>
+	</table>
+	<form action="#" th:action="@{/mr/processForm}" method="post">
+		<input type="radio" th:name="wageredOn" value="player">P <input
+			type="radio" th:name="wageredOn" value="banker">B <input
+			type="radio" th:name="wageredOn" value="nb" checked>NB <br>
+		<input type="number" th:name="unit" value="0" min="0" max="300">
+		<input type="submit" name="Deal" value="Deal"> New Shoe
+		-------------------------------> <input type="submit" name="New"
+			value="New Shoe">
+	</form>
+	<table border="1" class="floatedTable">
+		<tr th:each="np : ${nextPlayer}">
+			<th class="player">P</th>
+			<th class="chart">
+				
+				<th:block th:if="${np != null and #strings.length(np.predictChart) > 0}">
+					<div th:class="${#strings.substring(np.predictChart,0,1) == 'C' ? 'beb chaos': 'beb predictable'}" ></div>
+				</th:block>
+				<th:block th:if="${np != null and #strings.length(np.predictChart) > 1}">
+					<div th:class="${#strings.substring(np.predictChart,1,2) == 'C' ? 'chaoticSr': 'predictableSr'}" ></div>
+				</th:block>
+				<th:block th:if="${np != null and #strings.length(np.predictChart) > 2}">
+					<div th:class="${#strings.substring(np.predictChart,2,3) == 'C' ? 'chaos': 'predictable'}">/</div>
+				</th:block>
+			</th>
+		</tr>
+	</table>
+	<table border="1" class="floatedTable">
+		<tr th:each="nb : ${nextBanker}">
+			<th class="banker">B</th>
+			<th class="chart">
+				<th:block th:if="${nb != null and  #strings.length(nb.predictChart) > 0}">
+					<div th:class="${#strings.substring(nb.predictChart,0,1) == 'C' ? 'beb chaos': 'beb predictable'}" ></div>
+				</th:block>
+				<th:block th:if="${nb != null and #strings.length(nb.predictChart) > 1}">
+					<div th:class="${#strings.substring(nb.predictChart,1,2) == 'C' ? 'chaoticSr': 'predictableSr'}" ></div>
+				</th:block>
+				<th:block th:if="${nb != null and #strings.length(nb.predictChart) > 2}">
+					<div th:class="${#strings.substring(nb.predictChart,2,3) == 'C' ? 'chaos': 'predictable'}">/</div>
+				</th:block>
+			</th>
+		</tr>
+	</table>
+</body>
+</html>
